@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Book = require('./book.model');
-const { postABook, getAllBooks } = require('./book.controller');
+const { postABook, getAllBooks, getSingleBook, updateBook, deleteBook } = require('./book.controller');
 
 // HOW DATA IS MOVING - 
 // frontend => backend-server => controller => book schema => database => send to server => back to frontend
@@ -13,9 +13,18 @@ const { postABook, getAllBooks } = require('./book.controller');
 //put/batch = when edit or update something
 //delete = when delete something
 
-router.post("/create-book", postABook)
+router.post("/create-book", postABook);
 
 //get all books
-router.get("/", getAllBooks)
+router.get("/", getAllBooks);
+
+//single book request
+router.get("/:id", getSingleBook);
+
+//update a book endpoint
+router.put("/edit/:id", updateBook);
+
+//delete a book
+router.delete("/:id", deleteBook);
 
 module.exports = router;
