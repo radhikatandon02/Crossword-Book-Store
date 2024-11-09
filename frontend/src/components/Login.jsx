@@ -1,22 +1,26 @@
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../context/AuthContext";
 
 
 const Login = () => {
     const [message, setMessage] = useState("");
+    const {loginUser} = useAuth();
+    const navigate = useNavigate(); 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
 
-    const onSubmit = (data) => {
-        if(!data.email || !data.password){
-            setMessage("Please fill in required fields");
-        }
-        else{
-            setMessage("");
-            console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            await loginUser(data.email, data.password);
+            alert("Login Successfull");
+            navigate("/")
+        } catch (error) {
+            setMessage("Please provide a valid email and password") 
+           console.error(error)
         }
     }
 
@@ -42,7 +46,7 @@ const Login = () => {
                     <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
                     <input
                     {...register("password", { required: true })} 
-                    type="current-password" name="password" id="password" placeholder="Password" className="shadow appearance-none border rounder w-full py-2 px-3 leading-tight focus:outline-none focus:shadow" />
+                    type="password" name="password" id="password" placeholder="Password" className="shadow appearance-none border rounder w-full py-2 px-3 leading-tight focus:outline-none focus:shadow" />
                     {
                         errors.password && <p className="text-red-500 text-xs mb-3">Password is required</p>
                     }
