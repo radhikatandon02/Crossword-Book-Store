@@ -7,17 +7,23 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import avatarImg from "../assets/avatar.png";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
 
 const navigation = [
-    {name: "Dashboard", href:"/dashboard"},
+    {name: "Dashboard", href:"/"},
     {name: "Orders", href:"/orders"},
     {name: "Cart", href:"/cart"},
     {name: "Checkout", href:"/checkout"}
 ]
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const currentUser= false;
   const cartItems = useSelector(state => state.cart.cartItems);
+
+  const {currentUser, logout} = useAuth();
+
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6">
         <nav className="flex justify-between items-center">
@@ -56,6 +62,11 @@ const Navbar = () => {
                                                     </li>
                                                 ))
                                             }
+                                            <li>
+                                                <button 
+                                                onClick={handleLogout}
+                                                className="block px-4 w-full text-left py-2 text-sm hover:bg-gray-100 rounded-md">Logout</button>
+                                            </li>
                                         </ul>
                                     </div>
                                 )
