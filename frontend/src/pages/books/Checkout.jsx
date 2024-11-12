@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
+import Swal from "sweetalert2";
 
 const Checkout = () => {
       const cartItems = useSelector(state => state.cart.cartItems);
       const totalPrice = cartItems.reduce((acc,item) => acc + item.newPrice,0).toFixed(2);
       const {currentUser} = useAuth();
       const { register, handleSubmit, watch,  formState: { errors } } = useForm();
+
+      const [createOrder, {isLoading, error}] = useCreateOrderMutation();
+      const navigate = useNavigate();
       
       const [isChecked, setIsChecked] = useState(false);
-      const onSubmit = (data) => {
+      const onSubmit = async (data) => {
         const newOrder = {
             name: data.name,
             email: currentUser?.email,
@@ -25,8 +30,17 @@ const Checkout = () => {
             productIds: cartItems.map(item => item?._id),
             totalPrice: totalPrice,
         }
-        console.log(newOrder)
+        try {
+            await createOrder(newOrder).unwrap();
+            Swal.fire("Your Order Is Placed!");
+            navigate("/orders");
+        } catch (error) {
+            console.error("Error placing the order", error);
+            alert("Failed placing the order");
+        }
       }
+
+      if(isLoading) return <div>Loading ...</div>
 
 
   return (

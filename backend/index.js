@@ -16,8 +16,9 @@ app.use(cors({
 
 //routes
 const bookRoutes = require('./src/books/book.route')
+const orderRoutes = require('./src/orders/order.route')
 app.use("/api/books", bookRoutes)
-
+app.use("/api/orders", orderRoutes)
 
 app.use('/', (req, res) => {
   res.send('This is the server up and running')
