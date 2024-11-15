@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import getBaseUrl from '../../utils/baseURL';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import { MdIncompleteCircle } from "react-icons/md";
@@ -10,7 +10,7 @@ import RevenueChart from './RevenueChart';
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
