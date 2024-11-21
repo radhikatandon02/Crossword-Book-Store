@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import InputField from '../addBook/InputField'
 import SelectField from '../addBook/SelectField'
 import { useForm } from 'react-hook-form';
@@ -7,14 +8,13 @@ import Loading from '../../../components/Loading';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import getBaseUrl from '../../../utils/baseURL';
-import { useEffect } from 'react';
 
 const UpdateBook = () => {
   const { id } = useParams();
   const { data: bookData, isLoading, isError, refetch } = useFetchBookByIdQuery(id);
   // console.log(bookData)
   const [updateBook] = useUpdateBookMutation();
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   useEffect(() => {
     if (bookData) {
       setValue('title', bookData.title);
@@ -55,8 +55,8 @@ const UpdateBook = () => {
       });
       await refetch()
     } catch (error) {
-      console.log("Failed to update book.", error.message);
-      alert("Failed to Update Book.");
+      console.log("Failed to update book.", error);
+      alert("Failed to update book.");
     }
   }
   if (isLoading) return <Loading />

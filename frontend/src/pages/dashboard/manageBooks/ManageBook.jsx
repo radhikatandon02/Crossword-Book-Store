@@ -1,24 +1,25 @@
 import { useDeleteBookMutation, useFetchAllBooksQuery } from '../../../redux/features/books/booksApi';
 import { Link, useNavigate } from 'react-router-dom';
 
-const ManageBooks = () => {
+const ManageBook = () => {
     const navigate = useNavigate();
 
     const {data: books, refetch} = useFetchAllBooksQuery()
 
-    const [deleteBook] = useDeleteBookMutation();
+    const [deleteBook] = useDeleteBookMutation()
 
-const handleDeleteBook = async (id) => {
-    try {
-        await deleteBook({ id, headers: { Authorization: `Bearer ${token}` } }).unwrap();
-        alert('Book deleted successfully!');
-        refetch();
-    } catch (error) {
-        console.error('Failed to delete book:', error);
-        alert('Failed to delete book. Please try again.');
-    }
-};
+    // Handle deleting a book
+    const handleDeleteBook = async (id) => {
+        try {
+            await deleteBook(id).unwrap();
+            alert('Book deleted successfully!');
+            refetch();
 
+        } catch (error) {
+            console.error('Failed to delete book:', error.message);
+            alert('Failed to delete book. Please try again.');
+        }
+    };
 
     // Handle navigating to Edit Book page
     const handleEditClick = (id) => {
@@ -103,4 +104,4 @@ const handleDeleteBook = async (id) => {
   )
 }
 
-export default ManageBooks
+export default ManageBook

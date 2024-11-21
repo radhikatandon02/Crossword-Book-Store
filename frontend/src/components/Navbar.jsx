@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { IoBookSharp } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -23,21 +22,24 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout()
-  }
+  } 
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6">
         <nav className="flex justify-between items-center">
             {/* left side */}
             <div className="flex items-center md:gap-16 gap-4">
-                <Link to="/">
+                {/* <Link to="/">
                     <IoBookSharp className="size-8"/>
-                </Link>
+                </Link> */}
+                <a href="/" className="inline-flex items-center justify-center h-16 w-16">
+                    <img src="/fav-icon.png" alt="" />
+                </a>
                 {/* search field */}
-                <div className="relative sm:w-72 w-40 space-x-2">
+                {/* <div className="relative sm:w-72 w-40 space-x-2">
                     <IoIosSearch className="absolute inline-block left-3 inset-y-2"/>
                     <input type="text"placeholder="Search here" 
                     className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none" />
-                </div>
+                </div> */}
             </div>
 
             {/* right side */}
@@ -71,15 +73,15 @@ const Navbar = () => {
                                     </div>
                                 )
                             }
-                        </> : <Link to="/login"><FaUserCircle className="size-6" /></Link>
+                        </> : <Link to="/login" className="font-semibold text-lg">Login</Link>
                     }
                 </div>
 
                 <button className="hidden sm:block">
-                    <IoMdHeartEmpty className="size-6" />
+                    {/* <IoMdHeartEmpty className="size-6" /> */}
                 </button>
 
-                <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-md">
+                <Link to="/cart" className="bg-primary sm:px-6 p-2 flex items-center rounded-md">
                     <AiOutlineShoppingCart className="size-6" />
                     {
                         cartItems.length > 0 ? <span className="text-sm font-semibold sm:ml-1">{cartItems.length}</span> : <span className="text-sm font-semibold sm:ml-1">0</span>
