@@ -34,4 +34,4 @@ Crossword is an online bookstore built using the MERN (MongoDB, Express, React, 
 - **Mongoose**: ODM library for interacting with MongoDB.
 - **JWT (JSON Web Tokens)**: For secure user authentication.
 
-A work under progress !!!
+
